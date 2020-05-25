@@ -17,3 +17,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+// all articles
+Route::get('articles', 'ArticleController@index');
+
+// single article
+Route::get('article/{id}', 'ArticleController@show');
+
+// create article
+Route::post('article', 'ArticleCotroller@store');
+
+// update article
+Route::put('article', 'ArticleCotroller@store');
+
+// delete article
+Route::delete('article', 'ArticleCotroller@destroy');
