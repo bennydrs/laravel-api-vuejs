@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Article;
+use App\Http\Resources\Article as ArticleResource;
 
 class ArticleController extends Controller
 {
@@ -13,7 +16,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+         // get articles
+         $articles = Article::paginate(15);
+         return ArticleResource::collection($articles);
     }
 
     /**
@@ -24,7 +29,15 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article = $request->isMethod('put') ? Article::findOrFail($request->id) : new Article;
+
+        $article->id = $request->input('id');
+        $article->title = $request->input('title');
+        $article->body = $request->input('body');
+
+        if($article->save()){
+            return new ArticleResource($article);
+        }
     }
 
     /**
@@ -35,7 +48,9 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        // get article
+        $article = Article::findOrFail($id);
+        return new ArticleResource($article);
     }
 
     /**
@@ -46,6 +61,11 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article::findOrFail($id);
+
+        if($article->delete()){
+            return new ArticleResource($article);
+        }
+
     }
 }

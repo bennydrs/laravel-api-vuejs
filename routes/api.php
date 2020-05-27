@@ -26,10 +26,10 @@ Route::get('articles', 'ArticleController@index');
 Route::get('article/{id}', 'ArticleController@show');
 
 // create article
-Route::post('article', 'ArticleCotroller@store');
+Route::post('article', 'ArticleController@store');
 
 // update article
-Route::put('article', 'ArticleCotroller@store');
+Route::put('article', 'ArticleController@store');
 
 // delete article
-Route::delete('article', 'ArticleCotroller@destroy');
+Route::delete('article/{id}', 'ArticleController@destroy');
